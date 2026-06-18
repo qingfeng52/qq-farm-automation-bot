@@ -91,6 +91,41 @@ function hasOwn(obj, key) {
     return !!obj && Object.prototype.hasOwnProperty.call(obj, key);
 }
 
+function getLoginDeviceInfo() {
+    const os = String(CONFIG.os || '').trim().toLowerCase();
+    if (os === 'windows') {
+        return {
+            client_version: CONFIG.clientVersion,
+            sys_software: 'Windows',
+            network: 'wifi',
+        };
+    }
+
+    return {
+        client_version: CONFIG.clientVersion,
+        sys_software: 'iOS 26.2.1',
+        network: 'wifi',
+        memory: '7672',
+        device_id: 'iPhone X<iPhone18,3>',
+    };
+}
+
+function getWebSocketHeaders() {
+    const os = String(CONFIG.os || '').trim().toLowerCase();
+    if (os === 'windows') {
+        return {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) QQEX/9.9.29-47354 Chrome/138.0.7204.35 Electron/37.1.0 Safari/537.36 pcminiapp/3.3.11',
+            'Origin': 'file://',
+            'Referer': 'https://appservice.qq.com/1112386029/pc-v3.3.11/page-frame.html',
+        };
+    }
+
+    return {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090a13)',
+        'Origin': 'https://gate-obt.nqf.qq.com',
+    };
+}
+
 // ============ 消息编解码 ============
 // async function encodeMsg(serviceName, methodName, bodyBytes) {
 async function encodeMsg(serviceName, methodName, bodyBytes, clientSeqValue) {
@@ -398,13 +433,7 @@ async function sendLogin(onLoginSuccess) {
     const body = types.LoginRequest.encode(types.LoginRequest.create({
         sharer_id: toLong(0),
         sharer_open_id: '',
-        device_info: {
-            client_version: CONFIG.clientVersion,
-            sys_software: 'iOS 26.2.1',
-            network: 'wifi',
-            memory: '7672',
-            device_id: 'iPhone X<iPhone18,3>',
-        },
+        device_info: getLoginDeviceInfo(),
         share_cfg_id: toLong(0),
         scene_id: '1256',
         report_data: {
@@ -550,10 +579,7 @@ function connect(code, onLoginSuccess) {
     const url = `${CONFIG.serverUrl}?platform=${CONFIG.platform}&os=${CONFIG.os}&ver=${CONFIG.clientVersion}&code=${savedCode}&openID=`;
 
     ws = new WebSocket(url, {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090a13)',
-            'Origin': 'https://gate-obt.nqf.qq.com',
-        },
+        headers: getWebSocketHeaders(),
     });
 
     ws.binaryType = 'arraybuffer';

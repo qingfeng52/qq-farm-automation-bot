@@ -702,6 +702,7 @@ const platformOptions = [
 ]
 
 const osOptions = [
+  { label: 'Windows', value: 'Windows' },
   { label: 'iOS', value: 'iOS' },
   { label: 'Android', value: 'Android' },
 ]
