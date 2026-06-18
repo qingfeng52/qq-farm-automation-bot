@@ -1,0 +1,10 @@
+node_modules/
+core/node_modules/
+web/node_modules/
+
+web/dist/
+core/dist/
+dist/
+
+core/data/
+*.log
