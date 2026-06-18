@@ -1,5 +1,7 @@
 # QQ 农场多账号挂机 + Web 面板
 
+> Qingfeng 独立发布版更新日志见 [CHANGELOG.md](./CHANGELOG.md)。
+
 ---
 ## 技术栈
 
