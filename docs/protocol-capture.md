@@ -90,3 +90,33 @@ The decoder:
 
 Pass `--raw-values` only for local inspection when you understand the privacy
 risk.
+
+## 2026-06-19 Partial Feature Captures
+
+Captured local `.saz` files for dog, solar terms gift, cheer activity, and
+skin/dress-up pages. Raw captures are intentionally not committed.
+
+Confirmed services:
+
+- `gamepb.dogpb.DogService.AddFood`
+- `gamepb.solartermspb.SolarTermsService.GetSolarTerms`
+- `gamepb.solartermspb.SolarTermsService.ClaimSolarTerms`
+- `gamepb.activitypb.ActivityService.GetGroup`
+- `gamepb.activitypb.ActivityService.Operate`
+
+Implemented from this batch:
+
+- Manual dog food feeding with conservative `count=1` UI action.
+- Solar terms gift status query.
+- Manual solar terms gift claim using captured `solar_term_id=101`.
+- Activity list/group read-only summary for the captured 2026-06 activity
+  group.
+
+Still not enabled:
+
+- Automatic cheer activity operation. `ActivityService.Operate` carries
+  activity-specific payload fields, so the UI only exposes read-only detection
+  until the exact operation semantics are confirmed.
+- Skin/dress-up switching. The supplied dress-up capture only showed
+  `SkinsOwned`, `SkinsEquipped`, and activity group reads; no equip/switch
+  method was captured.

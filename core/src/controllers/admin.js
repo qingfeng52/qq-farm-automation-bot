@@ -1370,6 +1370,70 @@ function startAdminServer(dataProvider) {
     });
 
     // API: 启动账号
+    app.post('/api/profile/dog-food', async (req, res) => {
+        const id = getAccId(req);
+        if (!id) return res.status(400).json({ ok: false, error: 'Missing x-account-id' });
+
+        if (!checkAccountAccess(req, id)) {
+            return res.status(403).json({ ok: false, error: 'Forbidden' });
+        }
+
+        try {
+            const data = await provider.addDogFood(id, req.body && req.body.foodId, req.body && req.body.count);
+            res.json({ ok: true, data });
+        } catch (e) {
+            handleApiError(res, e);
+        }
+    });
+
+    app.get('/api/solar-terms', async (req, res) => {
+        const id = getAccId(req);
+        if (!id) return res.status(400).json({ ok: false, error: 'Missing x-account-id' });
+
+        if (!checkAccountAccess(req, id)) {
+            return res.status(403).json({ ok: false, error: 'Forbidden' });
+        }
+
+        try {
+            const data = await provider.getSolarTerms(id);
+            res.json({ ok: true, data });
+        } catch (e) {
+            handleApiError(res, e);
+        }
+    });
+
+    app.post('/api/solar-terms/claim', async (req, res) => {
+        const id = getAccId(req);
+        if (!id) return res.status(400).json({ ok: false, error: 'Missing x-account-id' });
+
+        if (!checkAccountAccess(req, id)) {
+            return res.status(403).json({ ok: false, error: 'Forbidden' });
+        }
+
+        try {
+            const data = await provider.claimSolarTerms(id, req.body && req.body.solarTermId);
+            res.json({ ok: true, data });
+        } catch (e) {
+            handleApiError(res, e);
+        }
+    });
+
+    app.get('/api/activity/modules', async (req, res) => {
+        const id = getAccId(req);
+        if (!id) return res.status(400).json({ ok: false, error: 'Missing x-account-id' });
+
+        if (!checkAccountAccess(req, id)) {
+            return res.status(403).json({ ok: false, error: 'Forbidden' });
+        }
+
+        try {
+            const data = await provider.getActivityModules(id);
+            res.json({ ok: true, data });
+        } catch (e) {
+            handleApiError(res, e);
+        }
+    });
+
     app.post('/api/accounts/:id/start', (req, res) => {
         try {
             const accountId = resolveAccId(req.params.id);

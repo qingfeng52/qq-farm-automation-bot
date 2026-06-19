@@ -34,6 +34,8 @@ async function loadProto() {
         getResourcePath('proto', 'dogpb.proto'),
         getResourcePath('proto', 'skinpb.proto'),
         getResourcePath('proto', 'avatarframepb.proto'),
+        getResourcePath('proto', 'solartermspb.proto'),
+        getResourcePath('proto', 'activitypb.proto'),
     ], { keepCase: true });
 
     // 网关
@@ -123,12 +125,24 @@ async function loadProto() {
     types.ClaimAllRewardsV2Reply = root.lookupType('gamepb.illustratedpb.ClaimAllRewardsV2Reply');
     types.GetDogInfoRequest = root.lookupType('gamepb.dogpb.GetDogInfoRequest');
     types.GetDogInfoReply = root.lookupType('gamepb.dogpb.GetDogInfoReply');
+    types.AddDogFoodRequest = root.lookupType('gamepb.dogpb.AddFoodRequest');
+    types.AddDogFoodReply = root.lookupType('gamepb.dogpb.AddFoodReply');
     types.SkinsOwnedRequest = root.lookupType('gamepb.skinpb.SkinsOwnedRequest');
     types.SkinsOwnedReply = root.lookupType('gamepb.skinpb.SkinsOwnedReply');
     types.SkinsEquippedRequest = root.lookupType('gamepb.skinpb.SkinsEquippedRequest');
     types.SkinsEquippedReply = root.lookupType('gamepb.skinpb.SkinsEquippedReply');
     types.AvatarFramesOwnedRequest = root.lookupType('gamepb.avatarframepb.AvatarFramesOwnedRequest');
     types.AvatarFramesOwnedReply = root.lookupType('gamepb.avatarframepb.AvatarFramesOwnedReply');
+    types.GetSolarTermsRequest = root.lookupType('gamepb.solartermspb.GetSolarTermsRequest');
+    types.GetSolarTermsReply = root.lookupType('gamepb.solartermspb.GetSolarTermsReply');
+    types.ClaimSolarTermsRequest = root.lookupType('gamepb.solartermspb.ClaimSolarTermsRequest');
+    types.ClaimSolarTermsReply = root.lookupType('gamepb.solartermspb.ClaimSolarTermsReply');
+    types.GetActivityListRequest = root.lookupType('gamepb.activitypb.ListRequest');
+    types.GetActivityListReply = root.lookupType('gamepb.activitypb.ListReply');
+    types.GetActivityGroupRequest = root.lookupType('gamepb.activitypb.GetGroupRequest');
+    types.GetActivityGroupReply = root.lookupType('gamepb.activitypb.GetGroupReply');
+    types.ActivityOperateRequest = root.lookupType('gamepb.activitypb.OperateRequest');
+    types.ActivityOperateReply = root.lookupType('gamepb.activitypb.OperateReply');
 
     // 好友
     types.GetAllFriendsRequest = root.lookupType('gamepb.friendpb.GetAllRequest');

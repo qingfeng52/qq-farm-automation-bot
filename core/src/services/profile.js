@@ -55,6 +55,25 @@ async function getDogInfo() {
     return normalizeDogInfo(types.GetDogInfoReply.decode(replyBody));
 }
 
+async function addDogFood(foodId, count = 1) {
+    const safeFoodId = Number(foodId) || 0;
+    const safeCount = Math.max(1, Math.min(99, Number(count) || 1));
+    if (!safeFoodId) {
+        throw new Error('Missing dog food id');
+    }
+    const body = types.AddDogFoodRequest.encode(types.AddDogFoodRequest.create({
+        food_id: safeFoodId,
+        count: safeCount,
+    })).finish();
+    const { body: replyBody } = await sendMsgAsync('gamepb.dogpb.DogService', 'AddFood', body);
+    const reply = types.AddDogFoodReply.decode(replyBody);
+    return {
+        foodId: safeFoodId,
+        count: safeCount,
+        guardLeftSeconds: normalizeLong(reply.guard_left_seconds),
+    };
+}
+
 async function getSkinsOwned() {
     const body = types.SkinsOwnedRequest.encode(types.SkinsOwnedRequest.create({})).finish();
     const { body: replyBody } = await sendMsgAsync('gamepb.skinpb.SkinService', 'SkinsOwned', body);
@@ -107,6 +126,7 @@ async function getProfileModules() {
 
 module.exports = {
     getDogInfo,
+    addDogFood,
     getSkinsOwned,
     getSkinsEquipped,
     getAvatarFramesOwned,

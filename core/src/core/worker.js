@@ -701,6 +701,22 @@ async function handleApiCall(msg) {
             case 'getProfileModules':
                 result = await require('../services/profile').getProfileModules();
                 break;
+            case 'addDogFood':
+                result = await require('../services/profile').addDogFood(args[0], args[1]);
+                break;
+            case 'getSolarTerms':
+                result = await require('../services/solar-terms').getSolarTerms();
+                break;
+            case 'claimSolarTerms':
+                result = await require('../services/solar-terms').claimSolarTerms(args[0]);
+                break;
+            case 'getActivityModules': {
+                const activity = require('../services/activity-modules');
+                const list = await activity.getActivityList().catch(error => ({ error: error.message }));
+                const summerGroup = await activity.getActivityGroup(2026060100).catch(error => ({ error: error.message }));
+                result = { list, summerGroup };
+                break;
+            }
             case 'getSchedulers':
                 result = getSchedulerRegistrySnapshot();
                 break;

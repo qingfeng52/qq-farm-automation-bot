@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package gamepb.solartermspb;
+
+message GetSolarTermsRequest {}
+
+message GetSolarTermsReply {
+    repeated bytes terms = 1;
+    int64 server_time = 2;
+    bytes activity = 3;
+}
+
+message ClaimSolarTermsRequest {
+    int64 solar_term_id = 1;
+}
+
+message ClaimSolarTermsReply {
+    repeated bytes rewards = 1;
+    bytes term = 2;
+}
+
+message GetSolarTermsRedDotRequest {}
+
+message GetSolarTermsRedDotReply {
+    bool has_red_dot = 1;
+}
+
+message SolarTermsStatusNotify {
+    bytes status = 1;
+}

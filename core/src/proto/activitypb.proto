@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package gamepb.activitypb;
+
+message ListRequest {}
+
+message ListReply {
+    repeated bytes activities = 1;
+    repeated bytes red_dots = 2;
+}
+
+message GetGroupRequest {
+    int64 group_id = 1;
+}
+
+message GetGroupReply {
+    bytes group = 1;
+}
+
+message OperateRequest {
+    int64 activity_id = 1;
+    int64 operation = 2;
+    bytes payload = 3;
+    bytes payload_107 = 107;
+    bytes payload_108 = 108;
+    bytes payload_109 = 109;
+    bytes payload_110 = 110;
+}
+
+message OperateReply {
+    int64 activity_id = 1;
+    int64 operation = 2;
+    bytes result = 3;
+    bytes payload_107 = 107;
+    bytes payload_108 = 108;
+    bytes payload_109 = 109;
+    bytes payload_110 = 110;
+}
+
+message SetSplashedRequest {
+    int64 activity_id = 1;
+}
+
+message SetSplashedReply {}
